@@ -1,0 +1,36 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Linea, Comillas, T_dato, Int, Variables, Variable,CodigoPrincipal, 
+    Funciones, Procedimientos, Funcion, Devolver, Procedimiento, Inicio, Fin, 
+    Si, Sino, Para, Mientras, Romper, Imprimir,
+    Igual, Suma, Resta, Multiplicacion, Division, Op_logico, Op_relacional,
+    Op_atribucion, Op_incremento, Op_booleano, Parentesis_a, Parentesis_c,
+    Llave_a, Llave_c, Corchete_a, Corchete_c, P_coma, Cadena , Identificador,
+    Numero, ERROR;
+non terminal IMPRIMIR, VARIABLE, bloquevariable;
+
+bloquevariable ::=
+    Variables
+    VARIABLE 
+;
+VARIABLE ::=
+    Variable Identificador T_dato
+;
+IMPRIMIR ::=
+    Imprimir Parentesis_a Cadena Parentesis_c 
+;
