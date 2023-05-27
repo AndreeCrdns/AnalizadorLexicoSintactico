@@ -15,7 +15,7 @@ espacio=[ ,\t,\r]+
 {espacio} {/*Ignore*/}
 
 /* Comentarios */
-( "#"(.)* ) {/*Ignore*/}
+( "//"(.)* ) {/*Ignore*/}
 
 /* Salto de linea */
 ( "\n" ) {return Linea;}
@@ -23,56 +23,26 @@ espacio=[ ,\t,\r]+
 /* Comillas */
 ( "\"" ) {lexeme=yytext(); return Comillas;}
 
-/* Bloque declaracion de variables */
-( "variables:" ) {lexeme=yytext(); return Variables;}
-
-/* Declaracion de variable */
-( "variable" ) {lexeme=yytext(); return Variable;}
-
 /* Tipos de datos */
-( entero | decimal | simbolo | texto | Logico | fecha-hora | fecha | hora | rfc | curp ) {lexeme=yytext(); return T_dato;}
+( byte | int | char | long | float | double ) {lexeme=yytext(); return T_dato;}
 
-/* Bloque codigo principal */
-( codigo-principal: ) {lexeme=yytext(); return CodigoPrincipal;}
+/* Tipo de dato String */
+( String ) {lexeme=yytext(); return Cadena;}
 
-/* Bloque funciones */
-( funciones: ) {lexeme=yytext(); return Funciones;}
+/* Palabra reservada If */
+( if ) {lexeme=yytext(); return If;}
 
-/* Bloque procedimientos */
-( procedimientos: ) {lexeme=yytext(); return Procedimientos;}
+/* Palabra reservada Else */
+( else ) {lexeme=yytext(); return Else;}
 
-/* Declaracion de funcion */
-( funcion ) {lexeme=yytext(); return Funcion;}
+/* Palabra reservada Do */
+( do ) {lexeme=yytext(); return Do;}
 
-/* devolver */
-( devolver ) {lexeme=yytext(); return Devolver;}
+/* Palabra reservada While */
+( while ) {lexeme=yytext(); return While;}
 
-/* Declaracion de procedimiento */
-( procedimiento ) {lexeme=yytext(); return Procedimiento;}
-
-/* inicio codigo */
-( inicio. ) {lexeme=yytext(); return Inicio;}
-
-/* fin codigo */
-( fin. ) {lexeme=yytext(); return Fin;}
-
-/* Si */
-( si ) {lexeme=yytext(); return Si;}
-
-/* Sino */
-( sino ) {lexeme=yytext(); return Sino;}
-
-/* Para */
-( para ) {lexeme=yytext(); return Para;}
-
-/* Mientras */
-( mientras ) {lexeme=yytext(); return Mientras;}
-
-/* Romper */
-( romper ) {lexeme=yytext(); return Romper;}
-
-/* Imprimir */
-( imprimir ) {lexeme=yytext(); return Imprimir;}
+/* Palabra reservada For */
+( for ) {lexeme=yytext(); return For;}
 
 /* Operador Igual */
 ( "=" ) {lexeme=yytext(); return Igual;}
@@ -122,11 +92,11 @@ espacio=[ ,\t,\r]+
 /* Corchete de cierre */
 ( "]" ) {lexeme = yytext(); return Corchete_c;}
 
+/* Marcador de inicio de algoritmo */
+( "main" ) {lexeme=yytext(); return Main;}
+
 /* Punto y coma */
 ( ";" ) {lexeme=yytext(); return P_coma;}
-
-/* Cadena */
-( "\""(.)*"\"" ) {lexeme=yytext(); return Cadena;}
 
 /* Identificador */
 {L}({L}|{D})* {lexeme=yytext(); return Identificador;}
