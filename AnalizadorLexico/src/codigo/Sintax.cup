@@ -32,7 +32,8 @@ non terminal PROGRAMA, BLOQUEVARIABLE, DVARIABLE, TIPODATO, BLOQUEFUNCION,
              PARAMETROS, SENTENCIA, LLAMADOPROCEFUN, BLOQUEPROCEDIMIENTOS, 
              DPROCEDIMIENTOS, DCODIGOPRINCIPAL,
              SISINO, COMPARACION, NUMEID;
-start with PROGRAMA;
+
+
 /*PROGRAMA donde se juntan todas las reglas*/
 PROGRAMA ::=
 ;
@@ -67,7 +68,7 @@ BLOQUEFUNCION ::=
 ;
 
 /*Definicion de 1 funcion*/
-DFUNCION ::= 
+DFUNCION ::=
     Funcion Identificador Parentesis_a PARAMETROS Parentesis_c Inicio SENTENCIA 
     Devolver Fin
 ;
@@ -82,7 +83,7 @@ SENTENCIA ::=
     Identificador Igual Numero SENTENCIA |
     DIMPRIMIR SENTENCIA |
     SISINO SENTENCIA |
-    LLAMADOPROCEFUN SENTENCIA
+    LLAMADOPROCEFUN SENTENCIA |
 ;
 
 BLOQUEPROCEDIMIENTOS ::=
@@ -92,9 +93,10 @@ BLOQUEPROCEDIMIENTOS ::=
 DPROCEDIMIENTOS ::=
     Procedimiento Identificador Parentesis_a PARAMETROS Parentesis_c Inicio 
     SENTENCIA Fin
+;
 
 SISINO ::=
-    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA SINO SENTENCIA |
+    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA Sino SENTENCIA |
     Si NUMEID COMPARACION NUMEID Entonces SENTENCIA
 ;
 COMPARACIOON ::=
@@ -105,11 +107,11 @@ NUMEID ::=
 ;
 
 /*Impresion*/
-DIMPRIMIR ::= 
+DIMPRIMIR ::=
     Imprimir Parentesis_a EXPRESION Parentesis_c
 ;
 /*Expresion de la Impresion*/
-EXPRESION ::= 
+EXPRESION ::=
     Cadena | Identificador | Cadena Suma Identificador | Identificador Suma 
     Cadena
 ;

@@ -51,7 +51,7 @@ espacio=[ ,\t,\r,\n]+
 /* Bloque codigo principal */
 ( codigo-principal: ) {return new Symbol(sym.CodigoPrincipal, yychar, yyline, yytext());}
 
-/* Bloque funciones: */
+/* Bloque funciones */
 ( funciones: ) {return new Symbol(sym.Funciones, yychar, yyline, yytext());}
 
 /* Bloque procedimientos */
