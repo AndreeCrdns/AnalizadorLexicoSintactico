@@ -15,74 +15,106 @@ parser code
 }
 :};
 
-terminal Linea, Comillas, T_dato, Int, Cadena, If, Else, Do, While, For,
-    Igual, Suma, Resta, Multiplicacion, Division, Op_logico, Op_relacional,
-    Op_atribucion, Op_incremento, Op_booleano, Parentesis_a, Parentesis_c,
-    Llave_a, Llave_c, Corchete_a, Corchete_c, Main, P_coma, Identificador,
-    Numero, ERROR;
-non terminal INICIO, SENTENCIA, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
-    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR;
+terminal Linea, Comillas, Tentero, Tdecimal, Tsimbolo, Ttexto, TLogico, 
+    Tfechahora, Tfecha, Thora, Trfc, Tcurp, Variables, Variable, 
+    CodigoPrincipal, Funciones, Procedimientos, Funcion, Devolver, 
+    Procedimiento, Inicio, Fin, Si, Entonces, Sino, Para, Mientras, Romper, 
+    Imprimir, Igual, Suma, Resta, Multiplicacion, Division, Op_logico_and, 
+    Op_logico_or, Op_logico_not, Op_bitwise_and, Op_bitwise_or, MayorQue, 
+    MenorQue, Igualdad, Diferente, MayorIgual, MenorIgual, Op_atribucion_suma, 
+    Op_atribucion_resta, Op_atribucion_multiplicacion, Op_atribucion_division, 
+    Op_atribucion_modulo, Op_incremento, Op_decremento, Op_booleano, 
+    Parentesis_a, Parentesis_c, Llave_a, Llave_c, Corchete_a, Corchete_c, 
+    P_coma, Cadena, Identificador, Numero, ERROR;
 
-start with INICIO;
+non terminal PROGRAMA, BLOQUEVARIABLE, DVARIABLE, TIPODATO, BLOQUEFUNCION, 
+             DFUNCION, DIMPRIMIR, EXPRESION , BLOQUECODIGOPRINCIPAL, 
+             PARAMETROS, SENTENCIA, LLAMADOPROCEFUN, BLOQUEPROCEDIMIENTOS, 
+             DPROCEDIMIENTOS, DCODIGOPRINCIPAL,
+             SISINO, COMPARACION, NUMEID;
+start with PROGRAMA;
+/*PROGRAMA donde se juntan todas las reglas*/
+PROGRAMA ::=
+;
 
-INICIO ::= 
-    Int Main Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c |
-    Main Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c
+/*Bloque de la variable donde se definen todas las variables*/
+BLOQUEVARIABLE ::=
+    Variables DVARIABLE
 ;
-SENTENCIA ::= 
-    SENTENCIA DECLARACION |
-    DECLARACION |
-    SENTENCIA IF | 
-    IF |
-    SENTENCIA IF_ELSE |
-    IF_ELSE |
-    SENTENCIA WHILE |
-    WHILE |
-    SENTENCIA DO_WHILE
-    DO_WHILE |
-    SENTENCIA FOR |
-    FOR
+
+/*Definicion de 1 o varias variables*/
+DVARIABLE ::=
+    Variable Identificador TIPODATO DVARIABLE |
 ;
-DECLARACION ::= 
-    Int Identificador P_coma | 
-    Int Identificador Op_atribucion Numero P_coma |
-    Int Identificador Igual Numero P_coma |
-    Int Identificador Op_incremento P_coma | 
-    Int Op_incremento Identificador P_coma | 
-    T_dato Identificador P_coma | 
-    T_dato Identificador Op_atribucion Numero P_coma |
-    T_dato Identificador Igual Numero P_coma |
-    T_dato Identificador Op_incremento P_coma | 
-    T_dato Op_incremento Identificador P_coma | 
-    Cadena Identificador Op_atribucion Comillas Comillas P_coma |
-    Cadena Identificador Igual Comillas Comillas P_coma |
-    Cadena Identificador Op_atribucion Comillas Identificador Comillas P_coma |
-    Cadena Identificador Igual Comillas Identificador Comillas P_coma
+
+TIPODATO ::=
+    Tentero | Tdecimal | Tsimbolo | Ttexto | TLogico | Tfechahora | Tfecha | 
+    Thora | Trfc | Tcurp
 ;
-IF ::= If Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+
+BLOQUECODIGOPRINCIPAL ::=
+    CodigoPrincipal
+    DCODIGOPRINCIPAL
 ;
-SENTENCIA_BOOLEANA ::= 
-    Op_booleano | 
-    Identificador Op_relacional Op_booleano |
-    Identificador Op_relacional Numero |
-    Identificador Op_relacional Identificador |
-    Identificador Op_relacional Comillas Comillas |
-    Identificador Op_relacional Comillas Identificador Comillas
+
+DCODIGOPRINCIPAL ::=
+    Inicio SENTENCIA LLAMADOPROCEFUN Fin
 ;
-IF_ELSE ::= If Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c Else Llave_a SENTENCIA Llave_c
+
+/*Bloque donde se define una o ninguna funcion*/
+BLOQUEFUNCION ::=
+    Funciones DFUNCION |
 ;
-WHILE ::= While Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+
+/*Definicion de 1 funcion*/
+DFUNCION ::= 
+    Funcion Identificador Parentesis_a PARAMETROS Parentesis_c Inicio SENTENCIA 
+    Devolver Fin
 ;
-DO_WHILE ::= Do Llave_a SENTENCIA Llave_c While Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma
+
+PARAMETROS ::=
+    Identificador PARAMETROS |
+    Identificador
 ;
-FOR ::= For Parentesis_a SENTENCIA_FOR Parentesis_c Llave_a SENTENCIA Llave_c
+
+SENTENCIA ::=
+    Identificador Igual Cadena SENTENCIA |
+    Identificador Igual Numero SENTENCIA |
+    DIMPRIMIR SENTENCIA |
+    SISINO SENTENCIA |
+    LLAMADOPROCEFUN SENTENCIA
 ;
-SENTENCIA_FOR ::=
-    T_dato Identificador Igual Numero P_coma SENTENCIA_BOOLEANA P_coma DECLARACION_FOR |
-    Identificador Igual Numero P_coma SENTENCIA_BOOLEANA P_coma DECLARACION_FOR
+
+BLOQUEPROCEDIMIENTOS ::=
+    Procedimientos DPROCEDIMIENTOS
 ;
-DECLARACION_FOR ::= 
-    Identificador Op_atribucion Numero |
-    Identificador Op_incremento | 
-    Op_incremento Identificador
+
+DPROCEDIMIENTOS ::=
+    Procedimiento Identificador Parentesis_a PARAMETROS Parentesis_c Inicio 
+    SENTENCIA Fin
+
+SISINO ::=
+    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA SINO SENTENCIA |
+    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA
+;
+COMPARACIOON ::=
+    Igualdad | Diferente | MayorQue | MenorQue | MayorIgual | MenorIgual
+;
+NUMEID ::=
+    Numero | Identificador
+;
+
+/*Impresion*/
+DIMPRIMIR ::= 
+    Imprimir Parentesis_a EXPRESION Parentesis_c
+;
+/*Expresion de la Impresion*/
+EXPRESION ::= 
+    Cadena | Identificador | Cadena Suma Identificador | Identificador Suma 
+    Cadena
+;
+/*Expresion de la Impresion*/
+LLAMADOPROCEFUN ::=
+    Identificador Parentesis_a PARAMETROS Parentesis_c | Identificador 
+    Parentesis_a Parentesis_c |
 ;

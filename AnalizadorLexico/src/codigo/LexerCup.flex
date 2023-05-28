@@ -24,34 +24,74 @@ espacio=[ ,\t,\r,\n]+
 {espacio} {/*Ignore*/}
 
 /* Comentarios */
-( "//"(.)* ) {/*Ignore*/}
+( "#"(.)* ) {/*Ignore*/}
 
 /* Comillas */
 ( "\"" ) {return new Symbol(sym.Comillas, yychar, yyline, yytext());}
 
+
+/* Bloque declaracion de variables */
+( variables: ) {return new Symbol(sym.Variables, yychar, yyline, yytext());}
+
+/* Declaracion de variable */
+( variable ) {return new Symbol(sym.Variable, yychar, yyline, yytext());}
+
 /* Tipos de datos */
-( byte | char | long | float | double ) {return new Symbol(sym.T_dato, yychar, yyline, yytext());}
+( entero ) {return new Symbol(sym.Tentero, yychar, yyline, yytext());}
+( decimal ) {return new Symbol(sym.Tdecimal, yychar, yyline, yytext());}
+( simbolo ) {return new Symbol(sym.Tsimbolo, yychar, yyline, yytext());}
+( texto ) {return new Symbol(sym.Ttexto, yychar, yyline, yytext());}
+( logico ) {return new Symbol(sym.TLogico, yychar, yyline, yytext());}
+( fechahora ) {return new Symbol(sym.Tfechahora, yychar, yyline, yytext());}
+( fecha ) {return new Symbol(sym.Tfecha, yychar, yyline, yytext());}
+( hora ) {return new Symbol(sym.Thora, yychar, yyline, yytext());}
+( rfc ) {return new Symbol(sym.Trfc, yychar, yyline, yytext());}
+( curp ) {return new Symbol(sym.Tcurp, yychar, yyline, yytext());}
 
-/* Tipo de dato Int (Para el main) */
-( "int" ) {return new Symbol(sym.Int, yychar, yyline, yytext());}
+/* Bloque codigo principal */
+( codigo-principal: ) {return new Symbol(sym.CodigoPrincipal, yychar, yyline, yytext());}
 
-/* Tipo de dato String */
-( String ) {return new Symbol(sym.Cadena, yychar, yyline, yytext());}
+/* Bloque funciones: */
+( funciones: ) {return new Symbol(sym.Funciones, yychar, yyline, yytext());}
 
-/* Palabra reservada If */
-( if ) {return new Symbol(sym.If, yychar, yyline, yytext());}
+/* Bloque procedimientos */
+( procedimientos: ) {return new Symbol(sym.Procedimientos, yychar, yyline, yytext());}
 
-/* Palabra reservada Else */
-( else ) {return new Symbol(sym.Else, yychar, yyline, yytext());}
+/* Declaracion funcion */
+( funcion ) {return new Symbol(sym.Funcion, yychar, yyline, yytext());}
 
-/* Palabra reservada Do */
-( do ) {return new Symbol(sym.Do, yychar, yyline, yytext());}
+/* devolver */
+( devolver ) {return new Symbol(sym.Devolver, yychar, yyline, yytext());}
 
-/* Palabra reservada While */
-( while ) {return new Symbol(sym.While, yychar, yyline, yytext());}
+/* Declaracion procedimiento*/
+( procedimiento ) {return new Symbol(sym.Procedimiento, yychar, yyline, yytext());}
 
-/* Palabra reservada For */
-( for ) {return new Symbol(sym.For, yychar, yyline, yytext());}
+/* inicio codigo */
+( inicio. ) {return new Symbol(sym.Inicio, yychar, yyline, yytext());}
+
+/* fin codigo */
+( fin. ) {return new Symbol(sym.Fin, yychar, yyline, yytext());}
+
+/* Si */
+( si ) {return new Symbol(sym.Si, yychar, yyline, yytext());}
+
+/* entonces */
+( entonces ) {return new Symbol(sym.Entonces, yychar, yyline, yytext());}
+
+/* Sino */
+( sino ) {return new Symbol(sym.Sino, yychar, yyline, yytext());}
+
+/* Para */
+( para ) {return new Symbol(sym.Para, yychar, yyline, yytext());}
+
+/* Mientras */
+( mientras ) {return new Symbol(sym.Mientras, yychar, yyline, yytext());}
+
+/* Romper */
+( romper ) {return new Symbol(sym.Romper, yychar, yyline, yytext());}
+
+/* Imprimir */
+( imprimir ) {return new Symbol(sym.Imprimir, yychar, yyline, yytext());}
 
 /* Operador Igual */
 ( "=" ) {return new Symbol(sym.Igual, yychar, yyline, yytext());}
@@ -69,16 +109,30 @@ espacio=[ ,\t,\r,\n]+
 ( "/" ) {return new Symbol(sym.Division, yychar, yyline, yytext());}
 
 /* Operadores logicos */
-( "&&" | "||" | "!" | "&" | "|" ) {return new Symbol(sym.Op_logico, yychar, yyline, yytext());}
+("&&") { return new Symbol(sym.Op_logico_and, yychar, yyline, yytext()); }
+("||") { return new Symbol(sym.Op_logico_or, yychar, yyline, yytext()); }
+("!") { return new Symbol(sym.Op_logico_not, yychar, yyline, yytext()); }
+("&") { return new Symbol(sym.Op_bitwise_and, yychar, yyline, yytext()); }
+("|") { return new Symbol(sym.Op_bitwise_or, yychar, yyline, yytext()); }
 
 /*Operadores Relacionales */
-( ">" | "<" | "==" | "!=" | ">=" | "<=" | "<<" | ">>" ) {return new Symbol(sym.Op_relacional, yychar, yyline, yytext());}
+( ">" ) {return new Symbol(sym.MayorQue, yychar, yyline, yytext());}
+( "<" ) {return new Symbol(sym.MenorQue, yychar, yyline, yytext());}
+( "==" ) {return new Symbol(sym.Igualdad, yychar, yyline, yytext());}
+( "!=" ) {return new Symbol(sym.Diferente, yychar, yyline, yytext());}
+( ">=" ) {return new Symbol(sym.MayorIgual, yychar, yyline, yytext());}
+( "<=" ) {return new Symbol(sym.MenorIgual, yychar, yyline, yytext());}
 
 /* Operadores Atribucion */
-( "+=" | "-="  | "*=" | "/=" | "%=" | "=" ) {return new Symbol(sym.Op_atribucion, yychar, yyline, yytext());}
+("+=") { return new Symbol(sym.Op_atribucion_suma, yychar, yyline, yytext()); }
+("-=") { return new Symbol(sym.Op_atribucion_resta, yychar, yyline, yytext()); }
+("*=") { return new Symbol(sym.Op_atribucion_multiplicacion, yychar, yyline, yytext()); }
+("/=") { return new Symbol(sym.Op_atribucion_division, yychar, yyline, yytext()); }
+("%=") { return new Symbol(sym.Op_atribucion_modulo, yychar, yyline, yytext()); }
 
 /* Operadores Incremento y decremento */
-( "++" | "--" ) {return new Symbol(sym.Op_incremento, yychar, yyline, yytext());}
+("++") { return new Symbol(sym.Op_incremento, yychar, yyline, yytext()); }
+("--") { return new Symbol(sym.Op_decremento, yychar, yyline, yytext()); }
 
 /*Operadores Booleanos*/
 ( true | false ) {return new Symbol(sym.Op_booleano, yychar, yyline, yytext());}
@@ -101,11 +155,11 @@ espacio=[ ,\t,\r,\n]+
 /* Corchete de cierre */
 ( "]" ) {return new Symbol(sym.Corchete_c, yychar, yyline, yytext());}
 
-/* Marcador de inicio de algoritmo */
-( "main" ) {return new Symbol(sym.Main, yychar, yyline, yytext());}
-
 /* Punto y coma */
 ( ";" ) {return new Symbol(sym.P_coma, yychar, yyline, yytext());}
+
+/* Cadena */
+( "\""(.)*"\"" ) {return new Symbol(sym.Cadena, yychar, yyline, yytext());}
 
 /* Identificador */
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}

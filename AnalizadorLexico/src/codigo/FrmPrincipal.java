@@ -29,10 +29,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
-    private void analizarLexico() throws IOException{
+
+    private void analizarLexico() throws IOException {
         int cont = 1;
-        
+
         String expr = (String) txtResultado.getText();
         Lexer lexer = new Lexer(new StringReader(expr));
         String resultado = "LINEA " + cont + "\t\tSIMBOLO\n";
@@ -50,26 +50,86 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 case Comillas:
                     resultado += "  <Comillas>\t\t" + lexer.lexeme + "\n";
                     break;
-                case Cadena:
-                    resultado += "  <Tipo de dato>\t" + lexer.lexeme + "\n";
+                case Variables:
+                    resultado += "  <Bloque declaracion variables>\t" + lexer.lexeme + "\n";
                     break;
-                case T_dato:
-                    resultado += "  <Tipo de dato>\t" + lexer.lexeme + "\n";
+                case Variable:
+                    resultado += "  <Declaracion de variable>\t" + lexer.lexeme + "\n";
                     break;
-                case If:
-                    resultado += "  <Reservada if>\t" + lexer.lexeme + "\n";
+                case Tentero:
+                    resultado += "  <Tipo de dato entero>\t" + lexer.lexeme + "\n";
                     break;
-                case Else:
-                    resultado += "  <Reservada else>\t" + lexer.lexeme + "\n";
+                case Tdecimal:
+                    resultado += "  <Tipo de dato decimal>\t" + lexer.lexeme + "\n";
                     break;
-                case Do:
-                    resultado += "  <Reservada do>\t" + lexer.lexeme + "\n";
+                case Tsimbolo:
+                    resultado += "  <Tipo de dato simbolo>\t" + lexer.lexeme + "\n";
                     break;
-                case While:
-                    resultado += "  <Reservada while>\t" + lexer.lexeme + "\n";
+                case Ttexto:
+                    resultado += "  <Tipo de dato texto>\t" + lexer.lexeme + "\n";
                     break;
-                case For:
-                    resultado += "  <Reservada while>\t" + lexer.lexeme + "\n";
+                case TLogico:
+                    resultado += "  <Tipo de dato Logico>\t" + lexer.lexeme + "\n";
+                    break;
+                case Tfechahora:
+                    resultado += "  <Tipo de dato fechahora>\t" + lexer.lexeme + "\n";
+                    break;
+                case Tfecha:
+                    resultado += "  <Tipo de dato fecha>\t" + lexer.lexeme + "\n";
+                    break;
+                case Thora:
+                    resultado += "  <Tipo de dato hora>\t" + lexer.lexeme + "\n";
+                    break;
+                case Trfc:
+                    resultado += "  <Tipo de dato rfc>\t" + lexer.lexeme + "\n";
+                    break;
+                case Tcurp:
+                    resultado += "  <Tipo de dato curp>\t" + lexer.lexeme + "\n";
+                    break;
+                case CodigoPrincipal:
+                    resultado += "  <Bloque codigoPrincipal>\t" + lexer.lexeme + "\n";
+                    break;
+                case Funciones:
+                    resultado += "  <Bloque funciones>\t" + lexer.lexeme + "\n";
+                    break;
+                case Procedimientos:
+                    resultado += "  <Bloque procedimientos>\t" + lexer.lexeme + "\n";
+                    break;
+                case Funcion:
+                    resultado += "  <Declaracion funcion>\t" + lexer.lexeme + "\n";
+                    break;
+                case Devolver:
+                    resultado += "  <Declaracion funcion>\t" + lexer.lexeme + "\n";
+                    break;
+                case Procedimiento:
+                    resultado += "  <Declaracion procedimiento>\t" + lexer.lexeme + "\n";
+                    break;
+                case Inicio:
+                    resultado += "  <Inicio codigo>\t" + lexer.lexeme + "\n";
+                    break;
+                case Fin:
+                    resultado += "  <Fin codigo>\t" + lexer.lexeme + "\n";
+                    break;
+                case Si:
+                    resultado += "  <Si>\t" + lexer.lexeme + "\n";
+                    break;
+                case Entonces:
+                    resultado += "  <Entonces>\t" + lexer.lexeme + "\n";
+                    break;
+                case Sino:
+                    resultado += "  <Sino>\t" + lexer.lexeme + "\n";
+                    break;
+                case Para:
+                    resultado += "  <Para>\t" + lexer.lexeme + "\n";
+                    break;
+                case Mientras:
+                    resultado += "  <Mientras>\t" + lexer.lexeme + "\n";
+                    break;
+                case Romper:
+                    resultado += "  <Romper>\t" + lexer.lexeme + "\n";
+                    break;
+                case Imprimir:
+                    resultado += "  <Imprimir>\t" + lexer.lexeme + "\n";
                     break;
                 case Igual:
                     resultado += "  <Operador igual>\t" + lexer.lexeme + "\n";
@@ -86,14 +146,59 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 case Division:
                     resultado += "  <Operador division>\t" + lexer.lexeme + "\n";
                     break;
-                case Op_logico:
-                    resultado += "  <Operador logico>\t" + lexer.lexeme + "\n";
+                case Op_logico_and:
+                    resultado += "  <Operador logico and>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_logico_or:
+                    resultado += "  <Operador logico or>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_logico_not:
+                    resultado += "  <Operador logico not>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_bitwise_and:
+                    resultado += "  <Operador bitwise and>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_bitwise_or:
+                    resultado += "  <Operador bitwise or>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_atribucion_suma:
+                    resultado += "  <Operador atribucion suma>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_atribucion_resta:
+                    resultado += "  <Operador atribucion resta>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_atribucion_multiplicacion:
+                    resultado += "  <Operador atribucion multi>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_atribucion_division:
+                    resultado += "  <Operador atribucion division>\t" + lexer.lexeme + "\n";
+                    break;
+                case Op_atribucion_modulo:
+                    resultado += "  <Operador atribucion modulo>\t" + lexer.lexeme + "\n";
                     break;
                 case Op_incremento:
                     resultado += "  <Operador incremento>\t" + lexer.lexeme + "\n";
                     break;
-                case Op_relacional:
-                    resultado += "  <Operador relacional>\t" + lexer.lexeme + "\n";
+                case Op_decremento:
+                    resultado += "  <Operador decremento>\t" + lexer.lexeme + "\n";
+                    break;
+                case MayorQue:
+                    resultado += "  <MayorQue>\t" + lexer.lexeme + "\n";
+                    break;
+                case MenorQue:
+                    resultado += "  <MenorQue>\t" + lexer.lexeme + "\n";
+                    break;
+                case Igualdad:
+                    resultado += "  <Igual>\t" + lexer.lexeme + "\n";
+                    break;
+                case Diferente:
+                    resultado += "  <Diferente>\t" + lexer.lexeme + "\n";
+                    break;
+                case MayorIgual:
+                    resultado += "  <MayorIgual>\t" + lexer.lexeme + "\n";
+                    break;
+                case MenorIgual:
+                    resultado += "  <MenorIgual>\t" + lexer.lexeme + "\n";
                     break;
                 case Op_atribucion:
                     resultado += "  <Operador atribucion>\t" + lexer.lexeme + "\n";
@@ -119,11 +224,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 case Corchete_c:
                     resultado += "  <Corchete de cierre>\t" + lexer.lexeme + "\n";
                     break;
-                case Main:
-                    resultado += "  <Reservada main>\t" + lexer.lexeme + "\n";
-                    break;
                 case P_coma:
                     resultado += "  <Punto y coma>\t" + lexer.lexeme + "\n";
+                    break;
+                case Cadena:
+                    resultado += "  <Cadena>\t" + lexer.lexeme + "\n";
                     break;
                 case Identificador:
                     resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";
@@ -134,6 +239,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 case ERROR:
                     resultado += "  <Simbolo no definido>\n";
                     break;
+
                 default:
                     resultado += "  < " + lexer.lexeme + " >\n";
                     break;
@@ -205,31 +311,35 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAnalizarLex)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLimpiarLex))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
+                .addComponent(btnAnalizarLex)
+                .addGap(144, 144, 144)
+                .addComponent(btnLimpiarLex))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(386, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(398, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnArchivo)
-                    .addComponent(btnAnalizarLex)
-                    .addComponent(btnLimpiarLex))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAnalizarLex)
+                        .addComponent(btnLimpiarLex))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnArchivo)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addGap(0, 50, Short.MAX_VALUE)
@@ -302,22 +412,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivoActionPerformed
-        // TODO add your handling code here:
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
-        
-        try {
-            String ST = new String(Files.readAllBytes(archivo.toPath()));
-            txtResultado.setText(ST);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnArchivoActionPerformed
-
     private void btnLimpiarLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarLexActionPerformed
         // TODO add your handling code here:
         txtAnalizarLex.setText(null);
@@ -340,7 +434,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         String ST = txtResultado.getText();
         Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
-        
+
         try {
             s.parse();
             txtAnalizarSin.setText("Analisis realizado correctamente");
@@ -351,6 +445,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
             txtAnalizarSin.setForeground(Color.red);
         }
     }//GEN-LAST:event_btnAnalizarSinActionPerformed
+
+    private void btnArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivoActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
+
+        try {
+            String ST = new String(Files.readAllBytes(archivo.toPath()));
+            txtResultado.setText(ST);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnArchivoActionPerformed
 
     /**
      * @param args the command line arguments
