@@ -23,19 +23,19 @@ terminal Linea, Comillas, Tentero, Tdecimal, Tsimbolo, Ttexto, TLogico,
     Op_logico_or, Op_logico_not, Op_bitwise_and, Op_bitwise_or, MayorQue, 
     MenorQue, Igualdad, Diferente, MayorIgual, MenorIgual, Op_atribucion_suma, 
     Op_atribucion_resta, Op_atribucion_multiplicacion, Op_atribucion_division, 
-    Op_atribucion_modulo, Op_incremento, Op_decremento, Op_booleano, 
-    Parentesis_a, Parentesis_c, Llave_a, Llave_c, Corchete_a, Corchete_c, 
-    P_coma, Cadena, Identificador, Numero, ERROR;
+    Op_atribucion_modulo, Parentesis_a, Parentesis_c, Llave_a, Llave_c, 
+    Corchete_a, Corchete_c, P_coma, Cadena, Identificador, Numero, ERROR;
 
 non terminal PROGRAMA, BLOQUEVARIABLE, DVARIABLE, TIPODATO, BLOQUEFUNCION, 
              DFUNCION, DIMPRIMIR, EXPRESION , BLOQUECODIGOPRINCIPAL, 
              PARAMETROS, SENTENCIA, LLAMADOPROCEFUN, BLOQUEPROCEDIMIENTOS, 
-             DPROCEDIMIENTOS, DCODIGOPRINCIPAL,
-             SISINO, COMPARACION, NUMEID;
+             DPROCEDIMIENTOS, DCODIGOPRINCIPAL, ASIGNACION,
+             SI, SINO, COMPARACION, NUMEID, SINGLE_SENTENCIA, SISENTENCIA;
 
 
 /*PROGRAMA donde se juntan todas las reglas*/
 PROGRAMA ::=
+    BLOQUEVARIABLE BLOQUECODIGOPRINCIPAL BLOQUEFUNCION BLOQUEPROCEDIMIENTOS
 ;
 
 /*Bloque de la variable donde se definen todas las variables*/
@@ -47,17 +47,18 @@ BLOQUEVARIABLE ::=
 DVARIABLE ::=
     Variable Identificador TIPODATO DVARIABLE |
 ;
-
+/*Tipos de datos*/
 TIPODATO ::=
     Tentero | Tdecimal | Tsimbolo | Ttexto | TLogico | Tfechahora | Tfecha | 
     Thora | Trfc | Tcurp
 ;
-
+/*Bloque del codigo prinicipal*/
 BLOQUECODIGOPRINCIPAL ::=
     CodigoPrincipal
     DCODIGOPRINCIPAL
 ;
 
+/*Definicion del codigo prinicipal*/
 DCODIGOPRINCIPAL ::=
     Inicio SENTENCIA LLAMADOPROCEFUN Fin
 ;
@@ -73,50 +74,70 @@ DFUNCION ::=
     Devolver Fin
 ;
 
-PARAMETROS ::=
-    Identificador PARAMETROS |
-    Identificador
-;
-
-SENTENCIA ::=
-    Identificador Igual Cadena SENTENCIA |
-    Identificador Igual Numero SENTENCIA |
-    DIMPRIMIR SENTENCIA |
-    SISINO SENTENCIA |
-    LLAMADOPROCEFUN SENTENCIA |
-;
-
-BLOQUEPROCEDIMIENTOS ::=
-    Procedimientos DPROCEDIMIENTOS
-;
-
-DPROCEDIMIENTOS ::=
-    Procedimiento Identificador Parentesis_a PARAMETROS Parentesis_c Inicio 
-    SENTENCIA Fin
-;
-
-SISINO ::=
-    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA Sino SENTENCIA |
-    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA
-;
-COMPARACIOON ::=
+/*Comparacion*/
+COMPARACION ::=
     Igualdad | Diferente | MayorQue | MenorQue | MayorIgual | MenorIgual
 ;
+/*Numero e Identificador*/
 NUMEID ::=
     Numero | Identificador
 ;
 
-/*Impresion*/
+/*Bloque de procedimientos*/
+BLOQUEPROCEDIMIENTOS ::=
+    Procedimientos DPROCEDIMIENTOS |
+;
+
+/*Definicion de 1 procedimientos*/
+DPROCEDIMIENTOS ::=
+    Procedimiento Identificador Parentesis_a PARAMETROS Parentesis_c Inicio 
+    SISENTENCIA Fin
+;
+
+SENTENCIA ::=
+    SINGLE_SENTENCIA |
+    SENTENCIA SINGLE_SENTENCIA
+;
+
+SINGLE_SENTENCIA ::=
+    ASIGNACION |
+    DIMPRIMIR |
+    LLAMADOPROCEFUN
+;
+SISENTENCIA ::=
+    SENTENCIA | SI
+;
+
+
+ASIGNACION ::=
+    Identificador Igual Cadena |
+    Identificador Igual Numero
+;
+
 DIMPRIMIR ::=
     Imprimir Parentesis_a EXPRESION Parentesis_c
 ;
-/*Expresion de la Impresion*/
+
 EXPRESION ::=
-    Cadena | Identificador | Cadena Suma Identificador | Identificador Suma 
-    Cadena
+    Cadena |
+    Identificador |
+    Cadena Suma EXPRESION |
+    Identificador Suma EXPRESION
 ;
-/*Expresion de la Impresion*/
+
+SI ::=
+    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA SINO
+;
+
+SINO ::=
+    Sino SENTENCIA |
+;
+
 LLAMADOPROCEFUN ::=
-    Identificador Parentesis_a PARAMETROS Parentesis_c | Identificador 
-    Parentesis_a Parentesis_c |
+    Identificador Parentesis_a PARAMETROS Parentesis_c
+;
+
+PARAMETROS ::=
+    Identificador PARAMETROS |
+    Identificador
 ;

@@ -176,12 +176,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 case Op_atribucion_modulo:
                     resultado += "  <Operador atribucion modulo>\t" + lexer.lexeme + "\n";
                     break;
-                case Op_incremento:
-                    resultado += "  <Operador incremento>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_decremento:
-                    resultado += "  <Operador decremento>\t" + lexer.lexeme + "\n";
-                    break;
                 case MayorQue:
                     resultado += "  <MayorQue>\t" + lexer.lexeme + "\n";
                     break;
@@ -199,12 +193,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     break;
                 case MenorIgual:
                     resultado += "  <MenorIgual>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_atribucion:
-                    resultado += "  <Operador atribucion>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_booleano:
-                    resultado += "  <Operador booleano>\t" + lexer.lexeme + "\n";
                     break;
                 case Parentesis_a:
                     resultado += "  <Parentesis de apertura>\t" + lexer.lexeme + "\n";

@@ -130,13 +130,6 @@ espacio=[ ,\t,\r,\n]+
 ("/=") { return new Symbol(sym.Op_atribucion_division, yychar, yyline, yytext()); }
 ("%=") { return new Symbol(sym.Op_atribucion_modulo, yychar, yyline, yytext()); }
 
-/* Operadores Incremento y decremento */
-("++") { return new Symbol(sym.Op_incremento, yychar, yyline, yytext()); }
-("--") { return new Symbol(sym.Op_decremento, yychar, yyline, yytext()); }
-
-/*Operadores Booleanos*/
-( true | false ) {return new Symbol(sym.Op_booleano, yychar, yyline, yytext());}
-
 /* Parentesis de apertura */
 ( "(" ) {return new Symbol(sym.Parentesis_a, yychar, yyline, yytext());}
 

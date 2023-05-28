@@ -123,14 +123,6 @@ espacio=[ ,\t,\r]+
 ("/=") { lexeme = yytext(); return Op_atribucion_division; }
 ("%=") { lexeme = yytext(); return Op_atribucion_modulo; }
 
-
-/* Operadores Incremento y decremento */
-("++") { lexeme = yytext(); return Op_incremento; }
-("--") { lexeme = yytext(); return Op_decremento; }
-
-/*Operadores Booleanos*/
-(true | false) {lexeme = yytext(); return Op_booleano;}
-
 /* Parentesis de apertura */
 ( "(" ) {lexeme=yytext(); return Parentesis_a;}
 
